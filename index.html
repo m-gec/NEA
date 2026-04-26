@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <!-- fit viewport to screen -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content" />
+  <title>sim 🤡</title>
+  <!-- link CSS -->
+  <link rel='stylesheet' href='style.css'>
+</head>
+<body>
+  <!-- svg icons -->
+  <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+    <defs>
+      <!-- camera icon -->
+      <symbol id="i-camera" viewBox="0 0 800 800" fill="currentColor">
+        <rect x="218.385" y="676.176" width="188.021" height="37.0868"/>
+        <rect x="96.7753" y="357.057" width="445.904" height="307.907" rx="25"/>
+        <rect x="531.467" y="422.605" width="67.2737" height="181.984" rx="11"/>
+        <path d="M779 651.163H741.05V649.177L711.961 582.165H542.679V445.03H712.508L741.05 378.055V376.031H779V651.163Z"/>
+        <path d="M49.7441 376.196L78.7461 395.714H106.333V434.834H79.292L49.7441 454.355V454.518H38.9189V376.031H49.7441V376.196Z"/>
+        <path d="M457.725 51.7373C544.656 51.7373 615.128 122.209 615.128 209.141C615.128 296.072 544.656 366.544 457.725 366.544C370.793 366.544 300.321 296.072 300.321 209.141C300.321 122.209 370.793 51.7374 457.725 51.7373ZM543.071 237.544C531.407 272.61 498.738 298.083 459.984 299.039L454.78 333.927C455.759 333.949 456.74 333.963 457.725 333.963C515.017 333.963 563.292 295.362 577.967 242.75L543.071 237.544ZM332.938 206.196C332.915 207.175 332.902 208.156 332.902 209.141C332.902 266.433 371.502 314.708 424.114 329.383L429.32 294.487C394.254 282.823 368.781 250.154 367.825 211.4L332.938 206.196ZM457.725 164.497C433.069 164.497 413.081 184.485 413.081 209.141C413.081 233.797 433.069 253.785 457.725 253.785C482.381 253.785 502.369 233.797 502.369 209.141C502.369 184.485 482.381 164.497 457.725 164.497ZM457.725 185.416C470.827 185.416 481.449 196.038 481.449 209.141C481.449 222.243 470.827 232.865 457.725 232.865C444.622 232.865 434 222.243 434 209.141C434 196.038 444.622 185.416 457.725 185.416ZM486.128 123.793C521.194 135.457 546.667 168.126 547.623 206.88L582.511 212.084C582.533 211.106 582.547 210.124 582.547 209.141C582.547 151.848 543.946 103.572 491.334 88.8975L486.128 123.793ZM457.725 84.3184C400.432 84.3184 352.157 122.918 337.481 175.53L372.377 180.736C384.041 145.671 416.711 120.197 455.464 119.241L460.668 84.3535C459.69 84.3309 458.708 84.3184 457.725 84.3184Z"/>
+        <path d="M158.063 101C231.39 101 290.835 160.445 290.835 233.772C290.835 307.1 231.39 366.544 158.063 366.544C84.7347 366.544 25.2903 307.1 25.2901 233.772C25.2901 160.444 84.7345 101 158.063 101ZM88.1836 312.53C106.773 329.036 131.247 339.061 158.063 339.062C180.449 339.061 201.202 332.073 218.264 320.161L198.513 297.95C186.805 305.345 172.934 309.627 158.063 309.627C140.004 309.627 123.42 303.315 110.394 292.779L88.1836 312.53ZM222.24 193.32C229.636 205.029 233.917 218.901 233.917 233.772C233.917 251.83 227.606 268.414 217.07 281.439L236.82 303.649C253.326 285.06 263.351 260.587 263.352 233.772C263.352 211.386 256.363 190.631 244.451 173.569L222.24 193.32ZM79.3018 163.893C62.796 182.482 52.7725 206.957 52.7725 233.772C52.7726 256.159 59.7603 276.912 71.6719 293.974L93.8828 274.223C86.4879 262.515 82.2072 248.644 82.2071 233.772C82.2071 215.714 88.5178 199.13 99.0537 186.104L79.3018 163.893ZM158.063 196.114C137.265 196.114 120.404 212.975 120.404 233.772C120.405 254.57 137.265 271.43 158.063 271.43C178.86 271.429 195.719 254.57 195.72 233.772C195.72 212.975 178.86 196.115 158.063 196.114ZM158.063 213.76C169.115 213.76 178.074 222.72 178.074 233.772C178.074 244.824 169.115 253.784 158.063 253.784C147.01 253.784 138.05 244.825 138.05 233.772C138.05 222.72 147.01 213.76 158.063 213.76ZM158.063 128.482C135.676 128.482 114.921 135.47 97.8594 147.382L117.61 169.593C129.319 162.197 143.191 157.917 158.063 157.917C176.12 157.917 192.704 164.227 205.73 174.763L227.94 155.012C209.351 138.506 184.877 128.483 158.063 128.482Z"/>
+      </symbol>
+      <!-- sphere icon -->
+      <symbol id="i-sphere" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/>
+        <ellipse cx="12" cy="12" rx="8" ry="4.8" fill="none" stroke="currentColor" stroke-width="2"/>
+      </symbol>
+      <!-- box icon -->
+      <symbol id="i-box" viewBox="0 0 24 24">
+        <path d="M3 7l9 5 9-5M3 7l9-5 9 5M3 7v10l9 5 9-5V7" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      </symbol>
+      <!-- mesh icon -->
+      <symbol id="i-mesh" viewBox="0 0 24 24">
+        <path d="M4 4h16v16H4zM12 4v16M4 12h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      </symbol>
+      <!-- triangle icon -->
+      <symbol id="i-triangle" viewBox="0 0 24 24">
+        <path d="M12 5l8 14H4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- canvas to draw frames to -->
+  <canvas id='gfx'></canvas>
+
+
+  <!-- sidebar -->
+  <aside id="sidebar" aria-label="Scene sidebar">
+    <header id="sidebar-header">
+      <h1>~edit scene~</h1>
+    </header>
+
+    <!-- object explorer panel -->
+    <section id="explorer" aria-label="Object explorer">
+      <div class="section-title">object explorer</div>
+      <ul id="tree" class="tree" role="tree" aria-label="Scene graph"></ul>
+    </section>
+
+    <!-- interface for inserting objects -->
+    <div id="explorer-tools">
+      <div class="tools-title">~add objects~</div>
+      <div class="tools-bar">
+        <button class="button small" id="add-sphere" type="button">+ Sphere</button>
+        <button class="button small" id="add-box" type="button">+ Box</button>
+        <button class="button small" id="add-mesh" type="button">+ Mesh</button>
+      </div>
+    </div>
+
+    <!-- interface for resizing the properties panel -->
+    <div id="prop-resizer"></div>
+
+    <!-- properties panel -->
+    <section id="properties" aria-label="Object properties">
+      <div class="section-title">object properties</div>
+      <div id="prop-placeholder">select an object to see properties</div>
+    </section>
+  </aside>
+
+
+  <!-- samples and fps counter -->
+  <div id='msg' aria-live='polite'></div>
+ 
+  <!-- linking main.js -->
+  <script type='module' src='/src/main.js'></script>
+
+  <!-- for console access on iOS safari -->
+  <script src='https://cdn.jsdelivr.net/npm/eruda'></script>
+  <script>eruda.init();</script>
+</body>
+</html>

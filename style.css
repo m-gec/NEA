@@ -1,0 +1,382 @@
+/* global defaults */
+html, body {
+  height: 100%;
+  margin: 0;
+  background: #000;
+  font: 14px/1.2 system-ui, sans-serif;
+  color: #fff;
+
+  /* stop page scrolling while the editor handles input */
+  overflow: hidden;
+  overscroll-behavior: none;
+
+  /* stop text selection and mobile callouts during viewport dragging */
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* main layout (viewport and sidebar) */
+body {
+  display: flex;
+  min-height: 100dvh;
+}
+
+/* style canvas */
+#gfx {
+  display: block;
+  width: 100%;
+  height: 100%;
+  flex: 1 1 auto;
+  min-width: 0;
+
+   /* let pointer handlers control panning instead of browser gestures */
+  touch-action: none;
+  cursor: grab;
+}
+#gfx:active { cursor: grabbing; }
+
+.button {
+
+  color: #ffffffc9;
+  background: transparent;
+  padding: 6px 10px;
+  border-radius: 2px;
+  font-weight: 600;
+}
+.button:hover { background: #ffffff20; }
+.button.ghost { background: transparent; }
+
+#sidebar {
+  position: relative;
+  width: 400px; max-width: 70vw;
+  background: #000;
+  border-left: 2px solid #ffffff20;
+
+  display: grid;
+
+  overflow: hidden;
+
+  /* sizing constants */
+  --props-h: 180px;
+  --resizer-h: 6px;
+  --tools-h: 36px;
+  --tools-title-h: 22px;
+  --tools-row-h: calc(var(--tools-title-h) + var(--tools-h) + 12px);
+
+  /* header, tree, tools, drag handle, properties */
+  grid-template-rows: auto 1fr var(--tools-row-h) var(--resizer-h) minmax(96px, var(--props-h));
+}
+/* allow vertical touch scrolling inside side panel areas */
+#sidebar, #tree, #properties { touch-action: pan-y; }
+
+#sidebar-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-bottom: 1px solid #ffffff1e;
+}
+#sidebar-header h1 {
+  margin: 0;
+  font-size: 16px;
+  letter-spacing: .5px;
+  opacity: .9;
+  width: 100%;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 12px;
+  text-transform: uppercase;
+
+  opacity: 0.7;
+  padding: 10px 12px 6px;
+}
+
+#explorer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1 1 auto;
+}
+
+/* section between explorer and properties for inserting objects */
+#explorer-tools{
+  position: relative;
+  background: rgba(16,16,16,0.15);
+  border-top: 1px solid #ffffff1e;
+  z-index: 22;
+}
+
+#explorer-tools .tools-title{
+  font-size: 11px;
+  opacity: 0.7;
+  text-align: center;
+  padding: 8px 12px 4px;
+  letter-spacing: .3px;
+}
+
+#explorer-tools .tools-bar{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 8px;
+  padding: 0 8px 8px;
+  height: var(--tools-h);
+}
+
+#explorer-tools .button.small {
+  padding: 6px 8px;
+  font-size: 12px;
+}
+
+/* draggable divider for resizing the properties panel */
+#prop-resizer{
+  position: relative;
+  width: 100%;
+  height: var(--resizer-h);
+  cursor: ns-resize;
+  z-index: 30;
+
+  background: linear-gradient(to bottom, #ffffff22, #ffffff10);
+  border-top: 1px solid #ffffff2a;
+  border-bottom: 1px solid #00000055;
+}
+
+/* invisible hit area so the divider is easier to grab */
+#prop-resizer::before {
+  content: "";
+  position: absolute;
+  left: -12px;
+  right: -12px;
+  top: -10px;
+  bottom: -15px;
+
+  background: transparent;
+  pointer-events: auto;
+}
+#prop-resizer:hover { background: #ffffff2a; }
+
+/* lower properties inspector */
+#properties{
+  position: relative;
+  overflow: auto;
+  z-index: 25;
+
+  border-top: 1px solid #ffffff1e;
+  box-shadow: 0 -6px 12px rgba(0,0,0,0.35);
+  padding-bottom: 12px;
+  min-height: 0;
+}
+
+/* property panel inner spacing and headings */
+#properties .prop-wrap { padding: 8px 12px 12px; }
+#properties h3 {
+  margin: 8px 0 6px;
+  font-size: 13px;
+  letter-spacing: .3px;
+  opacity: .85;
+  text-transform: uppercase;
+}
+
+/* two-column property row: label then input */
+#properties .prop-row {
+  display: grid;
+  grid-template-columns: 95px 1fr;
+  align-items: center;
+  margin: 0;
+  padding: 6px 8px;
+  color: #ffffff99;
+  font-style: italic;
+}
+
+/* alternating row shades */
+#properties .prop-row.shade-light { background: rgba(255,255,255,0.03); }
+#properties .prop-row.shade-dark  { background: rgba(0,0,0,0.15); }
+
+/* input group inside a property row */
+#properties .prop-row .inputs { display: flex; gap: 2px; align-items: right; }
+#properties input[type="number"],
+#properties input[type="text"] {
+  width: 100%;
+  min-height: 18px;
+  max-width: 45px;
+  box-sizing: border-box;
+  padding: 0px 3px;
+  background: transparent;
+  border: 1px solid #ffffff4d;
+  border-radius: 5px;
+  color: #ffffffCC;
+  outline: none;
+  font-family: monospace;
+  font-size: 11px;
+}
+/* hide increment UI that appears on textboxes in firefox */
+#properties input[type="number"] {
+  -moz-appearance: textfield;
+}
+#properties input[type="number"]::-webkit-outer-spin-button,
+#properties input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+#properties input[type="number"]:focus, #properties input[type="text"]:focus {
+  border-color: #ffffff99;
+  background: #14120a35;
+}
+#properties .hint { opacity: .6; font-size: 12px; }
+
+/* input layout for 3D vector properties */
+#properties .inputs.vec3 input {
+  flex: 1 1 calc((100% - 12px) / 3);
+  min-width: 0;
+}
+
+/* highlight the active property section title */
+#properties .prop-title--active {
+  background: #fff;
+  color: #000;
+  border-radius: 4px;
+  padding: 4px 8px;
+  display: inline-block;
+}
+
+/* wider field for editing object names */
+#properties .name-input {
+  max-width: 200px !important;
+  width: 100%;
+  text-align: left;
+  padding: 1px 8px !important;
+  border-radius: 2px !important;
+}
+
+/* scene tree list */
+#tree {
+  flex: 1 1 auto;
+  overflow: auto;
+  list-style: none;
+  margin: 0;
+  padding: 4px 6px 8px;
+  box-sizing: border-box;
+
+  padding-bottom: 8px;
+}
+
+/* scene tree item row */
+.tree li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 0;
+}
+
+/* alternating tree row shades */
+#tree li.shade-light { background: rgba(255,255,255,0.03); }
+#tree li.shade-dark  { background: rgba(0,0,0,0.15); }
+
+/* hover only on devices that actually support hover */
+@media (hover: hover) and (pointer: fine) { #tree li:hover { background: rgba(255,255,255,0.12); } }
+
+/* selected object row */
+#tree li[aria-selected="true"] {
+  background: rgb(255, 183, 0);
+  color: #000;
+
+}
+
+/* avoid keyboard focus highlighting UI */
+#tree li:focus { outline: none; }
+
+/* icon slot for object type glyphs */
+.tree .icon {
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  text-align: center;
+  opacity: .9;
+}
+
+/* object name text with ellipsis when too long */
+.tree .name {
+  flex: 1 1 auto;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* circular add child button in tree rows */
+.tree .add-child {
+  width: 22px; height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.35);
+  font-size: 18px;
+  line-height: 1;
+  padding: 0;
+  background: transparent;
+}
+.tree .add-child:hover { background: rgba(255,255,255,0.10); }
+.tree .add-child:focus-visible {
+  outline: 2px solid rgba(255,255,255,0.5);
+  outline-offset: 2px;
+}
+.tree .add-child { color: inherit; }
+/* selected rows invert add button colours */
+#tree li[aria-selected="true"] .add-child {
+  color: #000;
+  border-color: rgba(0,0,0,0.65);
+}
+#tree li[aria-selected="true"] .add-child:hover {
+  background: rgba(0,0,0,0.08);
+}
+
+/* mesh rows can expose child creation */
+.tree li[data-type="mesh"] .add-child { visibility: visible; border-radius: 100%; }
+
+/* child objects are slightly faded under their parent */
+.tree li.child { opacity: .9; }
+
+/* expand/collapse control for mesh children */
+.tree .twisty {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  color: inherit;
+  border-radius: 6px;
+  font-size: 26px;
+  line-height: 1;
+  opacity: .9;
+}
+.tree li[data-type="mesh"] .twisty { cursor: pointer; }
+.tree li[data-type="mesh"] .twisty:hover { background: rgba(255,255,255,0.08); }
+.tree li[data-type="mesh"] .twisty:focus-visible {
+  outline: 2px solid rgba(255,255,255,0.5);
+  outline-offset: 2px;
+}
+
+/* empty state text for the properties panel */
+#prop-placeholder {
+  opacity: 0.6;
+  padding: 8px 12px 0;
+  font-style: italic;
+}
+
+#msg {
+  position: fixed;
+  left: 8px;
+  bottom: 8px;
+  opacity: 0.8;
+}
